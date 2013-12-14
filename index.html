@@ -14,19 +14,7 @@ body {
   }
 #chart {
   padding: 10px;
-  width: 900px;
-  height: 900px;
   }
-.node rect {
-  cursor: move;
-  fill-opacity: .9;
-  shape-rendering: crispEdges;
-}
-
-.node text {
-  pointer-events: none;
-  text-shadow: 0 1px 0 #fff;
-}
 
 .link {
   fill: none;
@@ -35,7 +23,17 @@ body {
 }
 
 .link:hover, .selected {
-  stroke-opacity: .5;
+  stroke-opacity: .5;}
+
+.bar rect {
+  fill: #000;
+  stroke: #FFF;
+  stroke-width: 1px;
+  opacity: 0.5;
+  }
+.bar:hover rect {
+  opacity: 0.7;
+  }
 }
 </style>
 <title>OpenSpending Sankey</title>
@@ -45,19 +43,18 @@ body {
 
 <div id="chart">
 </div>
-<p>Fork on <a href="https://github.com/mihi-tr/openspending-sankey">Github</a></p>
+<p>Fork on <a href="https://github.com/mihi-tr/openspending-stackedbar">Github</a></p>
 <script src="js/vendor/d3.v3.min.js"></script>
-<script src="js/vendor/sankey.js"></script>
 <script src="js/vendor/underscore-min.js"></script>
 <script src="js/vendor/jquery.js"></script>
 <script src="js/vendor/openspending/aggregator.js"></script>
-<script src="js/os-sankey.js"></script>
+<script src="js/os-stackedbar.js"></script>
 <script>
 
 var config={
     siteUrl: 'http://openspending.org',
     dataset: 'black-budget',
-    drilldowns: ['to','category'],
+    drilldowns: ['to','category','sub-category'],
     cuts: ['year:2012'],
     rootNodeLabel: 'Total',
     measure: 'amount',
@@ -65,7 +62,7 @@ var config={
     callback: function (tree) {data=tree}
   };
 
-OpenSpending.sankey(config);
+OpenSpending.stackedbar(config);
 </script>
 </body>
 </html>

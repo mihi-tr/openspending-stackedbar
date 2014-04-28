@@ -80,15 +80,7 @@ OpenSpending.stackedbar= function(config) {
         })
       })
      
-     var pp=function(d) {
-        d=d.toString()
-        if (d.length>3) {
-          return pp(d.substr(0,d.length-3))+","+d.substr(d.length-3,d.lenght)
-          }
-        else {
-          return d
-          }
-        };
+     var pp=d3.format(",f");
 
       
 

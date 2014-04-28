@@ -88,7 +88,8 @@ OpenSpending.stackedbar= function(config) {
       .enter()
       .append("g")
       .attr("class","bar")
-      .on("click",function(d) { transition(d.children,svg) });
+      .on("click",function(d) { if (d.children.length > 1 )
+        {transition(d.children,svg)} });
     
      var stackedbars=groups.selectAll("rect")
       .data(function(d) { return d.children })

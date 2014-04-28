@@ -7,9 +7,11 @@ OpenSpending.stackedbar= function(config) {
     var height=600
     margin= { "left": 20,
       "right":20,
-      "top": 20,
+      "top": 35,
       "bottom": 20
     }
+  
+  var stack=[];
   
   var transition=function(c,svg) {
     var ds=(height/c.length)*0.6;
@@ -67,7 +69,6 @@ OpenSpending.stackedbar= function(config) {
       var y=(bh+bs)*i;
       var x=0;
       var height=bh;
-      console.log(d.children.length);
       if (d.children.length === 0 ) {
         d.children = [d]
         } 
@@ -81,8 +82,6 @@ OpenSpending.stackedbar= function(config) {
       })
      
      var pp=d3.format(",f");
-
-      
 
      var groups=svg.selectAll("g.bar")
       .data(c)
@@ -107,6 +106,29 @@ OpenSpending.stackedbar= function(config) {
       .attr("x",0)
       .attr("y",function(d,i) {return (bh+bs)*i })
       .attr("text-anchor","top");
+
+    stack.push({label: _.first(c).taxonomy,
+                data: c});
+    
+    console.log(stack);
+    svg.selectAll("svg ul").remove();
+    svg.append("foreignObject")
+        .attr("x",0)
+        .attr("y",-35)
+        .attr("width",width)
+        .attr("height",20)
+        .append("xhtml:body")
+        .append("ul")
+        .attr("class","sb-breadcrumbs")
+        .selectAll("li")
+        .data(stack)
+        .enter()
+        .append("li")
+        .text(function(d) {
+            return d.label; })
+        .on("click",function(d) {
+            stack=stack.slice(0,stack.indexOf(d));
+            draw(d.data,svg) });
     }
 
   this.callback=function (tree) {
